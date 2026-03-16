@@ -12,9 +12,10 @@ protocol ProductSortStrategy {
 }
 
 struct SortByName: ProductSortStrategy {
+    nonisolated init() {}
+
     func sort(_ products: [Product]) -> [Product] {
-        products.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending
-        }
+        products.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
 }
 
@@ -23,9 +24,11 @@ struct SortByPrice: ProductSortStrategy {
         case ascending
         case descending
     }
-    
+
     let order: SortOrder
-    
+
+    nonisolated init(order: SortOrder) { self.order = order }
+
     func sort(_ products: [Product]) -> [Product] {
         products.sorted {
             order == .ascending ? $0.price < $1.price : $0.price > $1.price
@@ -34,9 +37,10 @@ struct SortByPrice: ProductSortStrategy {
 }
 
 struct SortByFavorite: ProductSortStrategy {
+    nonisolated init() {}
+
     func sort(_ products: [Product]) -> [Product] {
-        products.sorted {
-            $0.isFavorite && $1.isFavorite
-        }
+        // Bug fix: favorites ($0.isFavorite == true) come before non-favorites
+        products.sorted { $0.isFavorite && !$1.isFavorite }
     }
 }

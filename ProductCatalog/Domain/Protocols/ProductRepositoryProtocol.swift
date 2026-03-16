@@ -9,7 +9,7 @@ import Foundation
 
 protocol ProductRepositoryProtocol {
     func fetchProducts() async -> Result<[Product], ProductRepositoryError>
-    func toggleisFavourite(productID: UUID) async -> Result<Product, ProductRepositoryError>
+    func toggleIsFavorite(productID: UUID) async -> Result<Product, ProductRepositoryError>
 }
 
 enum ProductRepositoryError: Error, Equatable {

@@ -13,7 +13,7 @@ struct Product: Identifiable, Equatable {
     var category: String
     var price: Double
     var isFavorite: Bool
-    
+
     init(name: String, category: String, price: Double, isFavorite: Bool = false) {
         self.id = UUID()
         self.name = name
